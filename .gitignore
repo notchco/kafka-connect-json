@@ -21,3 +21,8 @@ hs_err_pid*
 
 # offsets
 connect.offsets
+
+# gradle wrapper
+.gradlew
+.gradlew.bat
+.gradlew/wrapper

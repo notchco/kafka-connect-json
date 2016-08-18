@@ -34,3 +34,7 @@ task copyRuntimeLibs(type: Copy) {
 }
 
 task installWithDeps(dependsOn: ['clearOld', 'install', 'copyRuntimeLibs'])
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
