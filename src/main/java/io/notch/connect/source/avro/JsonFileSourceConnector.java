@@ -55,11 +55,11 @@ public class JsonFileSourceConnector extends SourceConnector {
 			.define(FILE_INTERVAL_CONFIG, Type.STRING, Importance.MEDIUM,
 					"How often to check for new file(s) to be processed.")
 			.define(FILE_OVERWRITE_CONFIG, Type.STRING, Importance.MEDIUM,
-					"Should a file be allowed to be written to kafka multiple times if such file is modified?")
+					"If a file is modified should it be republished to kafka?")
 			.define(SCHEMA_URI_CONFIG, Type.STRING, Importance.HIGH, "The URI to the Schema Registry.")
 			.define(SCHEMA_SUBJECT_CONFIG, Type.STRING, Importance.MEDIUM, "The subject used to validate avro schema.")
 			.define(SCHEMA_VERSION_CONFIG, Type.STRING, Importance.MEDIUM,
-					"The version of the subject ot be used for schema validation.");
+					"The version of the subject to be used for schema validation.");
 
 	private String topic;
 	private String fileLocation;
@@ -180,7 +180,7 @@ public class JsonFileSourceConnector extends SourceConnector {
 			ArrayNode responseJson = new ObjectMapper().readValue(response.toString(), ArrayNode.class);
 			version = responseJson.get(responseJson.size() - 1).toString();
 		} catch (IOException e) {
-			throw new ConnectException("Unable to connect with Schema Registry", e);
+			throw new ConnectException("Unable to retrieve schema from Schema Registry", e);
 		} finally {
 			try {
 				if (br != null)
